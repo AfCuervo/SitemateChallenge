@@ -4,32 +4,41 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class NoteService {
+export class issueService {
   constructor(private http: HttpClient) {}
 
-  updateNote() {
-    throw new Error('Method not implemented.');
+  updateIssue(Issue: any) {
+    return this.http.put('http://localhost:8080/api/v1/issue/edit/', Issue, {responseType: 'text'}).subscribe((resultData:any)=>
+    {
+      console.log(resultData);
+    });
   }
   
   getAll(){
-    return this.http.get('http://localhost:8080/api/v1/note/getAll');
+    return this.http.get('http://localhost:8080/api/v1/issue/getAll');
   }
   
-  save(note: any)
+  saveIssue(Issue: any)
   {
-    return this.http.post('http://localhost:8080/api/v1/note/save', note, {responseType: 'text'}).subscribe((resultData:any)=>
+    return this.http.post('http://localhost:8080/api/v1/issue/save', Issue, {responseType: 'text'}).subscribe((resultData:any)=>
     {
       console.log(resultData)
       alert("Note added succesfully");
     });
   }
-  
-  deleteNote(note: any)
+  getIssueById(issueId: string)
   {
-    return this.http.delete('http://localhost:8080/api/v1/note/delete'+ "/" + note, {responseType: 'text'}).subscribe((resultData:any)=>
+    return this.http.get('http://localhost:8080/api/v1/issue/search' + "/" + issueId, {responseType: 'text'}).subscribe((resultData:any)=>
+    {
+      console.log(resultData);
+    });
+  }
+  deleteIssue(Issue: any)
+  {
+    return this.http.delete('http://localhost:8080/api/v1/issue/delete'+ "/" + Issue, {responseType: 'text'}).subscribe((resultData:any)=>
     {
       console.log(resultData)
-      alert("Note deleted succesfully");
+      alert("Issue deleted succesfully");
     });
   }
 }
